@@ -39,6 +39,7 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
           <ChevronDown className="ml-auto size-5" />
         </button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent className="w-56 space-y-[2px] text-xs font-medium text-black dark:text-neutral-400">
         {isModerator && (
           <DropdownMenuItem

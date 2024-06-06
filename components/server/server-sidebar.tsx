@@ -81,6 +81,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   return (
     <div className="text-primary flex size-full flex-col bg-[#F2F3F5] dark:bg-[#2B2D31]">
       <ServerHeader server={server} role={role} />
+
       <ScrollArea className="flex-1 px-3">
         <div className="mt-2">
           <ServerSearch
@@ -124,7 +125,9 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             ]}
           />
         </div>
+
         <Separator className="my-2 rounded-md bg-zinc-200 dark:bg-zinc-700" />
+
         {!!textChannels?.length && (
           <div className="mb-2">
             <ServerSection
@@ -145,6 +148,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             </div>
           </div>
         )}
+
         {!!audioChannels?.length && (
           <div className="mb-2">
             <ServerSection
@@ -165,6 +169,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             </div>
           </div>
         )}
+
         {!!videoChannels?.length && (
           <div className="mb-2">
             <ServerSection
@@ -185,6 +190,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             </div>
           </div>
         )}
+
         {!!members?.length && (
           <div className="mb-2">
             <ServerSection
