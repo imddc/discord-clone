@@ -41,7 +41,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     }
   }
 
-  revalidatePath(`/server/${server.id}`)
+  revalidatePath(`/servers/${server.id}`)
 
   return {
     data: server
