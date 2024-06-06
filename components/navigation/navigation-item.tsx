@@ -24,7 +24,7 @@ export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
       <button onClick={onClick} className="group relative flex items-center">
         <div
           className={cn(
-            'bg-primary absolute left-0 w-[4px] rounded-r-full transition-all',
+            'absolute left-0 w-[4px] rounded-r-full bg-primary transition-all',
             params?.serverId !== id && 'group-hover:h-[20px]',
             params?.serverId === id ? 'h-[36px]' : 'h-[8px]'
           )}
@@ -33,7 +33,7 @@ export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
           className={cn(
             'group relative mx-3 flex size-[48px] overflow-hidden rounded-[24px] transition-all group-hover:rounded-[16px]',
             params?.serverId === id &&
-              'bg-primary/10 text-primary rounded-[16px]'
+              'rounded-[16px] bg-primary/10 text-primary'
           )}
         >
           <Image width={48} height={48} src={imageUrl} alt="Channel" />
