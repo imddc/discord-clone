@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createServer } from '~/actions/server/create'
 import { useAction } from '~/lib/use-action'
 import { FileUpload } from '../file-upload'

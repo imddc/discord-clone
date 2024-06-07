@@ -1,8 +1,6 @@
 'use client'
 
 // TODO: upload server image
-import { FileIcon, X } from 'lucide-react'
-import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 
 interface FileUploadInterface {
@@ -61,6 +59,7 @@ export const FileUpload = ({ id, value }: FileUploadInterface) => {
         name={id || 'imageUrl'}
         className="hidden"
         value={value || '/boji.jpeg'}
+        readOnly
       />
       <Avatar className="size-16">
         <AvatarImage src="/boji.jpeg" alt="avatar" />

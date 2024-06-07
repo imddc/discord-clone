@@ -1,7 +1,9 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
+import { ModalProvider } from '~/components/providers/modal-provider'
 import { ThemeProvider } from '~/components/theme-provider'
+import { Toaster } from '~/components/ui/sonner'
 import { cn } from '~/lib/utils'
 import '~/styles/globals.css'
 
@@ -27,6 +29,8 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="_discord_theme"
           >
+            <Toaster />
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>

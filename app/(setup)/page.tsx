@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
-import React from 'react'
-import InitialModal from '~/components/modal/initial-modal'
+import InitialModal from '~/components/modals/initial-modal'
 import { db } from '~/lib/db'
 import { initialProfile } from '~/lib/initial-profile'
 
