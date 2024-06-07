@@ -17,7 +17,7 @@ import {
 import { useModal } from '~/hooks/use-modal-store'
 import { useAction } from '~/lib/use-action'
 
-export const EditServerModal = () => {
+const EditServerModal = () => {
   const { isOpen, onClose, type, data } = useModal()
   const router = useRouter()
 
@@ -83,3 +83,5 @@ export const EditServerModal = () => {
     </Dialog>
   )
 }
+
+export default EditServerModal

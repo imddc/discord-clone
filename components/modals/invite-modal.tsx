@@ -15,7 +15,7 @@ import { Label } from '~/components/ui/label'
 import { useModal } from '~/hooks/use-modal-store'
 import { useOrigin } from '~/hooks/use-origin'
 
-export const InviteModal = () => {
+const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal()
   const origin = useOrigin()
 
@@ -92,3 +92,5 @@ export const InviteModal = () => {
     </Dialog>
   )
 }
+
+export default InviteModal

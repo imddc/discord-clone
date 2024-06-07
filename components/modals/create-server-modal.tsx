@@ -22,6 +22,7 @@ const CreateServerModal = () => {
     onSuccess(data) {
       console.log(data)
       toast.success(`Server ${data.name} created!`)
+      onClose()
     },
     onError(err) {
       console.log(err)
