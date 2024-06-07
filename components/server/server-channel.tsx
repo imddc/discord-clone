@@ -57,6 +57,7 @@ export const ServerChannel = ({
       >
         {channel.name}
       </p>
+
       {channel.name !== 'general' && role !== MemberRole.GUEST && (
         <div className="ml-auto flex items-center gap-x-2">
           <ActionTooltip label="Edit" align="center">
