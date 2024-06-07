@@ -17,7 +17,7 @@ interface FormSelectProps {
   disabled?: boolean
   errors?: Record<string, string[] | undefined>
   className?: string
-  defaultValue?: string
+  defaultValue?: ChannelType
 }
 
 const FormSelect = ({
@@ -29,7 +29,9 @@ const FormSelect = ({
   errors,
   required
 }: FormSelectProps) => {
-  const [value, setValue] = useState<ChannelType>(ChannelType.TEXT)
+  const [value, setValue] = useState<ChannelType>(
+    defaultValue || ChannelType.TEXT
+  )
 
   const handleChange = (v: ChannelType) => {
     setValue(v)
