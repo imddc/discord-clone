@@ -74,6 +74,7 @@ const CreateChannelModal = () => {
               label="Channel Type"
               disabled={isLoading}
               errors={fieldErrors}
+              defaultValue={channelType}
             />
           </div>
 
