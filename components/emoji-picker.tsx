@@ -11,15 +11,16 @@ import {
 } from '~/components/ui/popover'
 
 interface EmojiPickerProps {
+  disabled?: boolean
   onChange: (value: string) => void
 }
 
-const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
+const EmojiPicker = ({ disabled, onChange }: EmojiPickerProps) => {
   const { resolvedTheme } = useTheme()
 
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger disabled={disabled} asChild>
         <Smile className="text-zinc-500 transition hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300" />
       </PopoverTrigger>
       <PopoverContent

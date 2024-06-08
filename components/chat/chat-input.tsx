@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import queryString from 'query-string'
-import { ElementRef, useRef, useState } from 'react'
+import { useState } from 'react'
 import EmojiPicker from '~/components/emoji-picker'
 import { Input } from '~/components/ui/input'
 import { useModal } from '~/hooks/use-modal-store'
@@ -19,8 +19,9 @@ interface ChatInputProps {
 export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   const { onOpen } = useModal()
   const router = useRouter()
-  const formRef = useRef<ElementRef<'form'>>(null)
   const [content, setContent] = useState('')
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value)
@@ -31,25 +32,30 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   }
 
   const onSubmit = async (formData: FormData) => {
-    const url = queryString.stringifyUrl({
-      url: apiUrl,
-      query
-    })
+    try {
+      setIsLoading(true)
 
-    const values = {
-      content: formData.get('content') as string
+      const url = queryString.stringifyUrl({
+        url: apiUrl,
+        query
+      })
+
+      const values = {
+        content: formData.get('content') as string
+      }
+
+      await axios.post(url, values)
+
+      setContent('')
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
     }
-
-    await axios.post(url, values)
-
-    formRef.current?.reset()
-    formRef.current?.focus()
   }
 
-  const isLoading = false
-
   return (
-    <form ref={formRef} action={onSubmit}>
+    <form action={onSubmit}>
       <div className="relative p-4 pb-6">
         <button
           type="button"
@@ -72,7 +78,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         />
 
         <div className="absolute right-8 top-7">
-          <EmojiPicker onChange={handleSelectEmoji} />
+          <EmojiPicker onChange={handleSelectEmoji} disabled={isLoading} />
         </div>
       </div>
     </form>

@@ -48,6 +48,7 @@ export const ChatItem = ({
   socketQuery
 }: ChatItemProps) => {
   const [isEditing, setIsEditing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const { onOpen } = useModal()
   const params = useParams()
   const router = useRouter()
@@ -71,12 +72,11 @@ export const ChatItem = ({
     return () => window.removeEventListener('keyDown', handleKeyDown)
   }, [])
 
-  const isLoading = false
-
   const onSubmit = async (formData: FormData) => {
     const values = { content: formData.get('content') as string }
 
     try {
+      setIsLoading(true)
       const url = queryString.stringifyUrl({
         url: `${socketUrl}/${id}`,
         query: socketQuery
@@ -87,6 +87,8 @@ export const ChatItem = ({
       setIsEditing(false)
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
