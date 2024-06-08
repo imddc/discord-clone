@@ -1,6 +1,6 @@
 'use client'
 
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
@@ -37,6 +37,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     ref
   ) => {
     const { pending } = useFormStatus()
+
     return (
       <div className="space-y-2">
         <div className="space-y-1">
@@ -49,20 +50,20 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             </Label>
           ) : null}
           <Input
-            onBlur={onBlur}
-            defaultValue={defaultValue}
             ref={ref}
-            required={required}
-            name={id}
-            id={id}
-            placeholder={placeholder}
-            type={type}
-            disabled={pending || disabled}
             className={cn(
               'border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0',
               className
             )}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            required={required}
+            disabled={pending || disabled}
+            name={id}
+            id={id}
+            type={type}
             aria-describedby={`${id}-error`}
+            onBlur={onBlur}
           />
         </div>
         <FormErrors id={id} errors={errors} />

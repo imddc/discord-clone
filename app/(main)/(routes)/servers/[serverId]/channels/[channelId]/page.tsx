@@ -44,6 +44,7 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         serverId={channel.serverId}
         type="channel"
       />
+
       {channel.type === ChannelType.TEXT && (
         <>
           {/* <ChatMessages */}
@@ -60,6 +61,10 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
           {/*   paramKey="channelId" */}
           {/*   paramValue={channel.id} */}
           {/* /> */}
+          {/**/}
+
+          <div className="h-full flex-1">message</div>
+
           <ChatInput
             name={channel.name}
             type="channel"

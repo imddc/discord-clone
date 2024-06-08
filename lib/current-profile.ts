@@ -1,5 +1,5 @@
 import { auth, getAuth } from '@clerk/nextjs/server'
-import { NextRequest } from 'next/server'
+import { NextApiRequest } from 'next'
 import { db } from './db'
 
 export const currentProfile = async () => {
@@ -18,7 +18,7 @@ export const currentProfile = async () => {
   return profile
 }
 
-export const currentProfilePages = async (req: NextRequest) => {
+export const currentProfilePages = async (req: NextApiRequest) => {
   const { userId } = getAuth(req)
 
   if (!userId) {
