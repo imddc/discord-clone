@@ -2,6 +2,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import { ModalProvider } from '~/components/providers/modal-provider'
+import QueryProvider from '~/components/providers/query-provider'
 import { SocketProvider } from '~/components/providers/socket-provider'
 import { ThemeProvider } from '~/components/providers/theme-provider'
 import { Toaster } from '~/components/ui/sonner'
@@ -33,7 +34,7 @@ export default function RootLayout({
             <Toaster />
             <SocketProvider>
               <ModalProvider />
-              {children}
+              <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>
