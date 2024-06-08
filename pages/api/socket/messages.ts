@@ -83,8 +83,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponseServerIO) => {
       }
     })
 
-    const channelKey = `chat:${channelId}:message`
-    res?.socket?.server?.io?.emit(channelKey, message)
+    const createKey = `chat:${channelId}:message`
+    console.log('createKey------------------------------------>', createKey)
+    res?.socket?.server?.io?.emit(createKey, message)
 
     return res.status(200).json(message)
   } catch (error) {
