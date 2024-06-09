@@ -1,7 +1,6 @@
 'use client'
 
 import { MemberRole } from '@prisma/client'
-import axios from 'axios'
 import {
   Check,
   Gavel,
@@ -13,10 +12,10 @@ import {
   ShieldQuestion
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import qs from 'query-string'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { deleteMember } from '~/actions/members/delete'
+import { updateMember } from '~/actions/members/edit'
 import {
   Dialog,
   DialogContent,
@@ -69,6 +68,23 @@ const MembersModal = () => {
     }
   })
 
+  const {
+    execute: updateMemberExecute,
+    isLoading: updateMemberLoading,
+    data: updateMemberData
+  } = useAction(updateMember, {
+    onSuccess(_data) {
+      toast.success('updated member role!')
+
+      onOpen('members', {
+        server: _data as ServerWithMembersWithProfiles
+      })
+    },
+    onError(error) {
+      toast.error(error)
+    }
+  })
+
   const { server } = data as { server: ServerWithMembersWithProfiles }
 
   const isModalOpen = isOpen && type === 'members'
@@ -81,26 +97,14 @@ const MembersModal = () => {
     deleteMemberExecute(values)
   }
 
-  const onRoleChange = async (memberId: string, role: MemberRole) => {
-    try {
-      setLoadingId(memberId)
-
-      const url = qs.stringifyUrl({
-        url: `/api/members/${memberId}`,
-        query: {
-          serverId: server.id
-        }
-      })
-
-      const response = await axios.patch(url, { role })
-
-      router.refresh()
-      onOpen('members', { server: response.data })
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoadingId('')
+  const onRoleChange = (memberId: string, role: MemberRole) => {
+    const values = {
+      memberId,
+      serverId: server.id,
+      role: role
     }
+
+    updateMemberExecute(values)
   }
 
   return (
