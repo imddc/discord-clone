@@ -15,6 +15,8 @@ import {
 import { useRouter } from 'next/navigation'
 import qs from 'query-string'
 import { useState } from 'react'
+import { toast } from 'sonner'
+import { deleteMember } from '~/actions/members/delete'
 import {
   Dialog,
   DialogContent,
@@ -36,6 +38,7 @@ import {
 import { ScrollArea } from '~/components/ui/scroll-area'
 import { UserAvatar } from '~/components/user-avatar'
 import { useModal } from '~/hooks/use-modal-store'
+import { useAction } from '~/lib/use-action'
 import { ServerWithMembersWithProfiles } from '~/types'
 
 const roleIconMap = {
@@ -49,29 +52,33 @@ const MembersModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal()
   const [loadingId, setLoadingId] = useState('')
 
+  const {
+    execute: deleteMemberExecute,
+    isLoading: deleteMemberLoading,
+    data: deleteMemberData
+  } = useAction(deleteMember, {
+    onSuccess(_data) {
+      toast.success('deleted success!')
+
+      onOpen('members', {
+        server: _data as ServerWithMembersWithProfiles
+      })
+    },
+    onError(error) {
+      toast.error(error)
+    }
+  })
+
   const { server } = data as { server: ServerWithMembersWithProfiles }
 
   const isModalOpen = isOpen && type === 'members'
 
   const onKick = async (memberId: string) => {
-    try {
-      setLoadingId(memberId)
-      const url = qs.stringifyUrl({
-        url: `/api/members/${memberId}`,
-        query: {
-          serverId: server.id
-        }
-      })
-
-      const response = await axios.delete(url)
-
-      router.refresh()
-      onOpen('members', { server: response.data })
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoadingId('')
+    const values = {
+      memberId,
+      serverId: server.id
     }
+    deleteMemberExecute(values)
   }
 
   const onRoleChange = async (memberId: string, role: MemberRole) => {
