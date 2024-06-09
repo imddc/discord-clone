@@ -5,6 +5,7 @@ import { Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import queryString from 'query-string'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import EmojiPicker from '~/components/emoji-picker'
 import { Input } from '~/components/ui/input'
 import { useModal } from '~/hooks/use-modal-store'
@@ -40,11 +41,16 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         query
       })
 
-      const values = {
-        content: formData.get('content') as string
+      const content = formData.get('content') as string
+
+      if (!content) {
+        toast.warning('content must be required')
+        return
       }
 
-      await axios.post(url, values)
+      await axios.post(url, {
+        content
+      })
 
       setContent('')
     } catch (error) {
