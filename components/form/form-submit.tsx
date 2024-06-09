@@ -3,7 +3,7 @@
 import React from 'react'
 import { useFormStatus } from 'react-dom'
 import { cn } from '~/lib/utils'
-import { Button } from '../ui/button'
+import { Button, ButtonProps } from '../ui/button'
 
 interface FormSubmitProps {
   children: React.ReactNode
@@ -17,13 +17,15 @@ interface FormSubmitProps {
     | 'ghost'
     | 'link'
     | 'primary'
+  size?: ButtonProps['size']
 }
 
 const FormSubmit = ({
   children,
   disabled,
   className,
-  variant
+  variant,
+  size
 }: FormSubmitProps) => {
   const { pending } = useFormStatus()
   return (
@@ -32,7 +34,7 @@ const FormSubmit = ({
       type="submit"
       className={cn(className)}
       variant={variant}
-      size="sm"
+      size={size || 'sm'}
     >
       {children}
     </Button>

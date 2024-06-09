@@ -1,8 +1,9 @@
 'use client'
 
-import axios from 'axios'
 import { Check, Copy, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
+import { updateInviteCode } from '~/actions/invite-code/patch'
+import FormSubmit from '~/components/form/form-submit'
 import { Button } from '~/components/ui/button'
 import {
   Dialog,
@@ -14,14 +15,15 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { useModal } from '~/hooks/use-modal-store'
 import { useOrigin } from '~/hooks/use-origin'
+import { useAction } from '~/lib/use-action'
 
 const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal()
   const origin = useOrigin()
+  const { execute, isLoading, data: resData } = useAction(updateInviteCode, {})
 
   const { server } = data
   const [copied, setCopied] = useState(false)
-  const [isLoading, setLoading] = useState(false)
 
   const initeUrl = `${origin}/invite/${server?.inviteCode}`
   const isModalOpen = isOpen && type === 'invite'
@@ -35,17 +37,9 @@ const InviteModal = () => {
     }, 1000)
   }
 
-  const onNew = async () => {
-    try {
-      setLoading(true)
-      const response = await axios.patch(
-        `/api/servers/${server?.id}/invite-code`
-      )
-      onOpen('invite', { server: response.data })
-    } catch (error) {
-    } finally {
-      setLoading(false)
-    }
+  const onSubmit = async () => {
+    execute({ serverId: server!.id })
+    resData && onOpen('invite', { server: resData })
   }
 
   return (
@@ -58,7 +52,7 @@ const InviteModal = () => {
         </DialogHeader>
 
         <div className="p-6">
-          <Label className="dark:text-secondary/70 text-xs font-bold uppercase text-zinc-500">
+          <Label className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">
             Sever Invite Link
           </Label>
           <div className="mt-2 flex items-center gap-x-2">
@@ -77,16 +71,17 @@ const InviteModal = () => {
             </Button>
           </div>
 
-          <Button
-            onClick={onNew}
-            disabled={isLoading}
-            variant="link"
-            size="sm"
-            className="mt-4 text-xs text-zinc-500"
-          >
-            Generate a new link
-            <RefreshCw className="ml-2 size-4" />
-          </Button>
+          <form action={onSubmit}>
+            <FormSubmit
+              disabled={isLoading}
+              variant="link"
+              className="mt-4 text-xs text-zinc-500"
+              size="sm"
+            >
+              Generate a new link
+              <RefreshCw className="ml-2 size-4" />
+            </FormSubmit>
+          </form>
         </div>
       </DialogContent>
     </Dialog>
