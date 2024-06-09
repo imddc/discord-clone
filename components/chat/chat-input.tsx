@@ -7,6 +7,7 @@ import queryString from 'query-string'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import EmojiPicker from '~/components/emoji-picker'
+import { useSocket } from '~/components/providers/socket-provider'
 import { Input } from '~/components/ui/input'
 import { useModal } from '~/hooks/use-modal-store'
 
@@ -21,6 +22,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   const { onOpen } = useModal()
   const router = useRouter()
   const [content, setContent] = useState('')
+  const { isConnected } = useSocket()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -34,6 +36,11 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
 
   const onSubmit = async (formData: FormData) => {
     try {
+      if (!isConnected) {
+        toast.error('you are offline, try to reconnecting')
+        return
+      }
+
       setIsLoading(true)
 
       const url = queryString.stringifyUrl({
