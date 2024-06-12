@@ -140,7 +140,7 @@ export const ChatItem = ({
               href={fileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-secondary relative mt-2 flex aspect-square size-48 items-center overflow-hidden rounded-md border"
+              className="relative mt-2 flex aspect-square size-48 items-center overflow-hidden rounded-md border bg-secondary"
             >
               <Image
                 src={fileUrl}
@@ -151,7 +151,7 @@ export const ChatItem = ({
             </a>
           )}
           {isPDF && (
-            <div className="bg-background/10 relative mt-2 flex items-center rounded-md p-2">
+            <div className="relative mt-2 flex items-center rounded-md bg-background/10 p-2">
               <FileIcon className="size-10 fill-indigo-200 stroke-indigo-400" />
               <a
                 href={fileUrl}
