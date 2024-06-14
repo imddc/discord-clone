@@ -38,7 +38,7 @@ const CreateChannelModal = () => {
   const onSubmit = async (formData: FormData) => {
     const name = formData.get('name') as string
     const type = formData.get('type') as ChannelType
-    const serverId = params.serverId as string
+    const serverId = params?.serverId as string
 
     execute({
       name,
